@@ -1,26 +1,26 @@
 # Sense Python
 
-This repository is splitted in two folders : 
-- `cochl_sense` contains the source code of the cochlear.ai sense nodejs client
+This repository is split in two folders : 
+- `cochl_sense` contains the source code of the cochlear.ai sense python client
 - `examples` contains examples sample
 
 ## Quick start
 
 Go in `examples` folder
 
-Make sure that dependencies are install by running `pip install -r requirements.txt`.
+Make sure that dependencies are installed by running `pip install -r requirements.txt`.
 
-You can then inference a file : `python file.py`
+You can then inference a file: `python file.py`
 
 
 If you want to inference a stream, you will need to install `portaudio` on your system.
-You can then inference audio from your microphone : `python pyaudio_sense.py`
+You can then inference audio from your microphone: `python pyaudio_sense.py`
 
 ## Use the library
 
 To use our library, install it by running `pip install cochl-sense`.
 
-You can now import classes :
+You can now import classes:
 ```python
 from cochl_sense.file import FileBuilder
 from cochl_sense.stream import StreamBuilder
@@ -31,23 +31,23 @@ from cochl_sense.stream import StreamBuilder
 `File` represents a class that can inference audio coming from an audio file.
 
 An audio file is any source of audio data which duration is known at runtime.
-Because duration is known at runtime, server will wait for the whole file to be received before 
+Because the duration is known at runtime, the server will wait for the whole file to be received before 
 to start inferencing. All inferenced data will be received in one payload.
 
-A file can be for instance, a mp3 file stored locally, a wav file accessible from an url etc...
+A file can be, for instance, a mp3 file stored locally, a WAV file accessible from an URL etc...
 
-So far wav, flac, mp3, ogg, mp4 are supported.
+So far WAV, flac, mp3, ogg, mp4 are supported.
 
-If you are using another file encoding format, let us know at support@cochlear.ai so that we can priorize it in our internal roadmap.
+If you are using another file encoding format, let us know at support@cochlear.ai so that we can prioritize it in our internal roadmap.
 
-`File` implements the following interface : 
+`File` implements the following interface: 
 
 ```python
 class File:
     def inference() -> Result: 
 ```
 
-When calling `inference`, a GRPC connection will be established with the backend, audio data of the file will be sent and a `Result` instance will be returned in case of success (described bellow).
+When calling `inference`, a GRPC connection will be established with the backend, audio data of the file will be sent and a `Result` instance will be returned in case of success (described below).
 
 Note that network is not reached until `inference` method is called.
 
@@ -55,13 +55,13 @@ Note that `inference` can be called only once per `File` instance.
 
 To create a `File` instance, you need to use a `FileBuilder` instance. `FileBuilder` is following the builder pattern and calling its `build` method will create a `File` instance.
 
-`FileBuider` implements the following interface :
+`FileBuider` implements the following interface:
 
 ```python
 class FileBuilder: 
     #api key of cochlear.ai projects available at https://dashboard.cochlear.ai
     def with_api_key(key: str) -> FileBuilder:
-    #format of the audio file : can be mp3, flac, wav, ogg, etc...
+    #format of the audio file: can be mp3, flac, WAV, ogg, etc...
     def with_format(format: str) -> FileBuilder:
     #data reader to the file data
     def with_reader(reader) ->FileBuilder:
@@ -78,9 +78,9 @@ Note that `with_api_key`, `with_format` and `with_reader` method needs to be cal
 `Stream` represents a class that can inference audio coming from an audio stream.
 
 An audio stream is any source of data which duration is not known at runtime. 
-Because duration is not known, server will inference audio as it comes. One second of audio will be required before the first result to be returned. After that, one result will be given every 0.5 second of audio.
+Because the duration is not known, the server will inference audio as it comes. One second of audio will be required before the first result to be returned. After that, one result will be given every 0.5 seconds of audio.
 
-A stream can be for instance, the audio data comming from a microphone, audio data comming from a web radio etc...
+A stream can be, for instance, the audio data coming from a microphone, audio data coming from a web radio, etc...
 
 Streams can be stopped at any moment while inferencing.
 
@@ -91,9 +91,9 @@ For best performance, we recommand using a sampling rate of 22050Hz and data rep
 
 Multiple results will be returned by calling a callback function.
 
-If you are using another stream encoding format that is not supported, let us know at support@cochlear.ai so that we can priorize it in our internal roadmap.
+If you are using another stream encoding format that is not supported, let us know at support@cochlear.ai so that we can prioritize it in our internal roadmap.
 
-`Stream` implements the following interface : 
+`Stream` implements the following interface: 
 
 ```python
 class Stream:
@@ -102,15 +102,15 @@ class Stream:
 ```
 
 When calling `inference`, a GRPC connection will be established with the backend, audio data of the stream will be sent every 0.5s.
-Once result is returned by the server, the `callback` function is called.
+Once the result is returned by the server, the `callback` function is called.
 
-Note that network is not reached until `inference` method is called.
+Note that the network is not reached until `inference` method is called.
 
 Note that inference can be called only once per `Stream` instance.
 
 To create a `Stream` instance, you need to use a `StreamBuilder` instance. `StreamBuilder` is following the builder pattern and calling its `build` method will create a `Stream` instance.
 
-`StreamBuider` implements the following interface :
+`StreamBuider` implements the following interface:
 
 ```python
 class SrteamBuilder:
@@ -134,7 +134,7 @@ class SrteamBuilder:
 }
 ```
 
-Note that `with_api_key`, `with_data_type`, `with_sampling_rate` and `with_streamer` method needs to be called before calling the `build` method, otherwise an error will be thrown.
+Note that `with_api_key`, `with_data_type`, `with_sampling_rate`, and `with_streamer` method needs to be called before calling the `build` method, otherwise an error will be thrown.
 
 
 ### Result
@@ -143,7 +143,7 @@ Result is a class that is returned by both file and stream when calling `inferen
 
 Multiple results will be returned by a stream by calling a callback function. For a file only one result will be returned.
 
-`Result` implements the following interface :
+`Result` implements the following interface:
 ```python
 class Result:
     #returns all events
@@ -154,13 +154,13 @@ class Result:
     def detected_events_timing() -> Dictionnary[str, List[Tuple[int, int]]]:
     #return only the "tag" of the event that match the "filter" function
     def detected_tags() -> List[str]:
-    #returns the service name : "human-interaction" or "emergency" for instance*/
+    #returns the service name: "human-interaction" or "emergency" for instance*/
     def service() -> List[str]:
     #returns a raw json object containing service name and an array of events
     def to_json() -> str:
-    #use a filter function : that function takes an event as input and return a boolean. An event will be "detected" if the filter function returns true for that event
-    def use_default_filter() -> Result
- :   #the default filter is to consider all events as detected. So by default, allEvents() and detectedEvents() will return the same result
+    #use a filter function: that function takes an event as input and return a boolean. An event will be "detected" if the filter function returns true for that event
+    def use_default_filter() -> Result:
+        #the default filter is to consider all events as detected. So by default, allEvents() and detectedEvents() will return the same result
     def set_filter(filter): Result
         #where filter is a function that takes an event in input and returns a boolean
 ```
