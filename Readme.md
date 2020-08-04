@@ -8,13 +8,45 @@ This repository is split in two folders :
 
 Go in `examples` folder
 
+### Installation
+
+If you want to inference **a stream**, you will need to install `portaudio` on your system.
+
+To install pyaudio, you can follow the official documentation here  https://people.csail.mit.edu/hubert/pyaudio/
+
+
 Make sure that dependencies are installed by running `pip install -r requirements.txt`.
 
-You can then inference a file: `python file.py`
+### File Inferencing
+
+You can then inference a file by running :
+
+```python
+python file.py
+```
+
+### Stream Inferencing
+
+To inference audio comming from your microphone, you have to make sure first that the audio is properly audible : sound shouldn't be too low, neither saturating.
+
+You can inference audio coming from your microphone by running:
+
+```python
+python pyaudio_sense.py
+```
+
+### Known issues
 
 
-If you want to inference a stream, you will need to install `portaudio` on your system.
-You can then inference audio from your microphone: `python pyaudio_sense.py`
+On Mac, after following installation steps, you might face this error : `C1083: Cannot open include file: 'portaudio.h'`
+
+The problem is that portaudio library is not properly located on your computer.
+
+You can fix the issue by running 
+
+```
+pip install --global-option='build_ext' --global-option='-I/usr/local/include' --global-option='-L/usr/local/lib' pyaudio
+```
 
 ## Use the library
 
