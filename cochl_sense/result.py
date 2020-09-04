@@ -1,11 +1,11 @@
 import json
 
 class Event:
-    def __init__(self, json):
-        self.tag = json["tag"]
-        self.probability = json["probability"]
-        self.start_time = json["start_time"]
-        self.end_time = json["end_time"]
+    def __init__(self, result):
+        self.tag = result.tag
+        self.probability = result.probability
+        self.start_time = result.startTime
+        self.end_time = result.endTime
 
     def __repr__(self):
         return str(vars(self))
@@ -25,11 +25,10 @@ def default_event_filter(event):
     return True
 
 class Result:
-    def __init__(self, raw):        
-        raw_json = json.loads(raw)
-        result = raw_json["result"]
-        self.__service = result["task"]
-        self.__events = [Event(json_frame) for json_frame in result["frames"]]
+    def __init__(self, result):        
+        self.__service = result.service
+        self.__events = [Event(event) for event in result.events]
+
         self.use_default_filter()
 
     def __str__(self):
@@ -72,10 +71,8 @@ class Result:
 
         return summary
 
-    def _append_new_result(self, raw, max_events_history_size):
-        raw_json = json.loads(raw)
-        result = raw_json["result"]
-        new_events = [Event(json_frame) for json_frame in result["frames"]]
+    def _append_new_result(self, result, max_events_history_size):
+        new_events = [Event(event) for event in result.events]
         self.__events = self.__events[len(self.__events) - max_events_history_size:] + new_events
 
 def _merge_overlapping_events(times):

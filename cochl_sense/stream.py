@@ -1,4 +1,4 @@
-from .constants import HOST, MAX_DATA_SIZE, SERVER_CA_CERTIFICATE, USER_AGENT, API_VERSION
+from . import constants 
 from .proto import SenseClient_pb2, SenseClient_pb2_grpc
 from .result import Result,default_event_filter
 
@@ -18,13 +18,14 @@ STREAM_FORMAT = {
 
 
 class Stream:
-    def __init__(self, api_key, streamer, sampling_rate, data_type, host, max_events_history_size):
+    def __init__(self, api_key, streamer, sampling_rate, data_type, host, max_events_history_size, smartFiltering):
         self.__api_key = api_key
         self.__streamer = streamer
         self.__sampling_rate = sampling_rate
         self.__data_type = data_type
         self.__host = host
         self.__max_events_history_size = max_events_history_size
+        self.__smart_filtering = smartFiltering
 
         self.__inferenced = False
         self.__buffer = b''
@@ -47,16 +48,16 @@ class Stream:
 
         initial_resp = iterator.next()
 
-        result = Result(initial_resp.outputs)
+        result = Result(initial_resp)
         result.set_filter(filter)  
         if len(result.detected_events()) > 0:
             callback(copy.deepcopy(result))
 
         for resp in iterator:
-            new_result = Result(resp.outputs)
+            new_result = Result(resp)
             new_result.set_filter(filter)
 
-            result._append_new_result(resp.outputs, self.__max_events_history_size)
+            result._append_new_result(resp, self.__max_events_history_size)
             
             if len(new_result.detected_events()) > 0:
                 callback(copy.deepcopy(result))
@@ -65,33 +66,48 @@ class Stream:
         return STREAM_FORMAT.get(self.__data_type)
 
     def __grpc_requests(self):
+        offset = 0
         for data in self.__streamer():
             self.__buffer = self.__buffer + data
 
             while len(self.__buffer) >= self.__data_type_size() * self.__sampling_rate / 2:
-                to_send = self.__buffer[:MAX_DATA_SIZE]
-                self.__buffer = self.__buffer[MAX_DATA_SIZE:]
-                yield SenseClient_pb2.RequestStream(data=to_send,apikey=self.__api_key,sr=self.__sampling_rate,dtype=self.__data_type, api_version=API_VERSION, user_agent=USER_AGENT)
+                to_send = self.__buffer[:constants.MAX_DATA_SIZE]
+                self.__buffer = self.__buffer[constants.MAX_DATA_SIZE:]
+                yield SenseClient_pb2.Audio(data=to_send, segmentOffset=offset, segmentStartTime=0)
+                offset += len(to_send)
     
     def __send_to_grpc(self):
         if self.__inferenced:
             raise RuntimeError("stream was already inferenced")
         self.__inferenced = True
 
-        credentials = grpc.ssl_channel_credentials(root_certificates=SERVER_CA_CERTIFICATE)
+        credentials = grpc.ssl_channel_credentials(root_certificates=constants.SERVER_CA_CERTIFICATE)
         self.__channel = grpc.secure_channel(self.__host, credentials)
-        stub = SenseClient_pb2_grpc.SenseStub(self.__channel)
+
+        stub = SenseClient_pb2_grpc.CochlStub(self.__channel)
 
         requests = self.__grpc_requests()
 
-        iterator = stub.sense_stream(requests)
+        audioFormat = 'PCM({},{},1)'.format(self.__data_type, self.__sampling_rate)
+
+        metadata = [
+            (constants.API_KEY_METADATA, self.__api_key),
+            (constants.FORMAT_METADATA, audioFormat),
+            (constants.API_VERSION_METADATA, constants.API_VERSION),
+            (constants.USER_AGENT_METADATA, constants.USER_AGENT),
+        ]
+        if self.__smart_filtering:
+            metadata.append((constants.SMART_FILTERING_METADATA, "true"))
+
+        iterator = stub.sensestream(requests, metadata=metadata)
         return iterator
 
 class StreamBuilder:
     def __init__(self):
         self.sampling_rate_warning = True
-        self.host = HOST
+        self.host = constants.HOST
         self.max_events_history_size = 0
+        self.smartFiltering = True
 
     def with_api_key(self, api_key):
         self.api_key = api_key
@@ -125,6 +141,10 @@ class StreamBuilder:
         self.host = host
         return self
 
+    def with_smart_filtering(self, smartFiltering):
+        self.smartFiltering = smartFiltering
+        return self
+
     def build(self):
         return Stream(
             api_key=self.api_key,
@@ -132,5 +152,7 @@ class StreamBuilder:
             sampling_rate=self.sampling_rate,
             data_type=self.data_type,
             host=self.host,
-            max_events_history_size=self.max_events_history_size)
+            max_events_history_size=self.max_events_history_size,
+            smartFiltering = self.smartFiltering,
+            )
 

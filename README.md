@@ -12,7 +12,7 @@ Go in `examples` folder
 
 If you want to inference **a stream**, you will need to install `portaudio` on your system.
 
-To install pyaudio, you can follow the official documentation here  https://people.csail.mit.edu/hubert/pyaudio/
+To install pyaudio, you can follow the pyaudio documentation here  https://people.csail.mit.edu/hubert/pyaudio/
 
 
 Make sure that dependencies are installed by running `pip install -r requirements.txt`.
@@ -27,7 +27,7 @@ python file.py
 
 ### Stream Inferencing
 
-To inference audio comming from your microphone, you have to make sure first that the audio is properly audible : sound shouldn't be too low, neither saturating.
+To inference audio comming from your microphone, you have to make sure first that the audio is properly audible : sound shouldn't be too low, neither saturating.
 
 You can inference audio coming from your microphone by running:
 
@@ -99,6 +99,8 @@ class FileBuilder:
     def with_reader(reader) ->FileBuilder:
         #where reader is a type that implements io.BufferedIOBase (see https://docs.python.org/3/library/io.html#io.BufferedIOBase)
     
+    #activate or not smartfiltering (default False)
+    def with_smart_filtering(smartfiltering) -> FileBuilder
     #creates a File instance*/
     def build() -> File:
 ```
@@ -155,6 +157,8 @@ class SrteamBuilder:
     #data of the pcm stream
     def with_streamer(streamer) -> StreamBuilder:
         #where streamer is a generator of binary string
+    #activate or not smartfiltering (default False)
+    def with_smart_filtering(smartfiltering) -> StreamBuilder
 
     #creates a Stream instance*/
     def build() -> Stream:

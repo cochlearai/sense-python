@@ -17,55 +17,43 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='SenseClient.proto',
   package='sense.full.v1',
   syntax='proto3',
-  serialized_options=b'Z\007vendors',
-  serialized_pb=b'\n\x11SenseClient.proto\x12\rsense.full.v1\"`\n\x07Request\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\x0e\n\x06\x61pikey\x18\x02 \x01(\t\x12\x0e\n\x06\x66ormat\x18\x03 \x01(\t\x12\x13\n\x0b\x61pi_version\x18\x04 \x01(\t\x12\x12\n\nuser_agent\x18\x05 \x01(\t\"q\n\rRequestStream\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\x0e\n\x06\x61pikey\x18\x02 \x01(\t\x12\r\n\x05\x64type\x18\x03 \x01(\t\x12\n\n\x02sr\x18\x04 \x01(\x05\x12\x13\n\x0b\x61pi_version\x18\x05 \x01(\t\x12\x12\n\nuser_agent\x18\x06 \x01(\t\"\x1b\n\x08Response\x12\x0f\n\x07outputs\x18\x01 \x01(\t2\x92\x01\n\x05Sense\x12<\n\x05sense\x12\x16.sense.full.v1.Request\x1a\x17.sense.full.v1.Response\"\x00(\x01\x12K\n\x0csense_stream\x12\x1c.sense.full.v1.RequestStream\x1a\x17.sense.full.v1.Response\"\x00(\x01\x30\x01\x42\tZ\x07vendorsb\x06proto3'
+  serialized_options=b'\n\027ai.cochlear.sense.protoZ\t.;vendors',
+  create_key=_descriptor._internal_create_key,
+  serialized_pb=b'\n\x11SenseClient.proto\x12\rsense.full.v1\"F\n\x05\x41udio\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\x15\n\rsegmentOffset\x18\x02 \x01(\x03\x12\x18\n\x10segmentStartTime\x18\x03 \x01(\x01\"M\n\x05\x45vent\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x11\n\tstartTime\x18\x02 \x01(\x01\x12\x0f\n\x07\x65ndTime\x18\x03 \x01(\x01\x12\x13\n\x0bprobability\x18\x04 \x01(\x01\"C\n\nCochlSense\x12\x0f\n\x07service\x18\x01 \x01(\t\x12$\n\x06\x65vents\x18\x02 \x03(\x0b\x32\x14.sense.full.v1.Event2\x8f\x01\n\x05\x43ochl\x12@\n\tsensefile\x12\x14.sense.full.v1.Audio\x1a\x19.sense.full.v1.CochlSense\"\x00(\x01\x12\x44\n\x0bsensestream\x12\x14.sense.full.v1.Audio\x1a\x19.sense.full.v1.CochlSense\"\x00(\x01\x30\x01\x42$\n\x17\x61i.cochlear.sense.protoZ\t.;vendorsb\x06proto3'
 )
 
 
 
 
-_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='sense.full.v1.Request',
+_AUDIO = _descriptor.Descriptor(
+  name='Audio',
+  full_name='sense.full.v1.Audio',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='data', full_name='sense.full.v1.Request.data', index=0,
+      name='data', full_name='sense.full.v1.Audio.data', index=0,
       number=1, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='apikey', full_name='sense.full.v1.Request.apikey', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='segmentOffset', full_name='sense.full.v1.Audio.segmentOffset', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='format', full_name='sense.full.v1.Request.format', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='segmentStartTime', full_name='sense.full.v1.Audio.segmentStartTime', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='api_version', full_name='sense.full.v1.Request.api_version', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='user_agent', full_name='sense.full.v1.Request.user_agent', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -79,90 +67,46 @@ _REQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=36,
-  serialized_end=132,
+  serialized_end=106,
 )
 
 
-_REQUESTSTREAM = _descriptor.Descriptor(
-  name='RequestStream',
-  full_name='sense.full.v1.RequestStream',
+_EVENT = _descriptor.Descriptor(
+  name='Event',
+  full_name='sense.full.v1.Event',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='data', full_name='sense.full.v1.RequestStream.data', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='apikey', full_name='sense.full.v1.RequestStream.apikey', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='dtype', full_name='sense.full.v1.RequestStream.dtype', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='sr', full_name='sense.full.v1.RequestStream.sr', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='api_version', full_name='sense.full.v1.RequestStream.api_version', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='user_agent', full_name='sense.full.v1.RequestStream.user_agent', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=134,
-  serialized_end=247,
-)
-
-
-_RESPONSE = _descriptor.Descriptor(
-  name='Response',
-  full_name='sense.full.v1.Response',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='outputs', full_name='sense.full.v1.Response.outputs', index=0,
+      name='tag', full_name='sense.full.v1.Event.tag', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='startTime', full_name='sense.full.v1.Event.startTime', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='endTime', full_name='sense.full.v1.Event.endTime', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='probability', full_name='sense.full.v1.Event.probability', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -175,69 +119,112 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=249,
-  serialized_end=276,
+  serialized_start=108,
+  serialized_end=185,
 )
 
-DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
-DESCRIPTOR.message_types_by_name['RequestStream'] = _REQUESTSTREAM
-DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
+
+_COCHLSENSE = _descriptor.Descriptor(
+  name='CochlSense',
+  full_name='sense.full.v1.CochlSense',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='service', full_name='sense.full.v1.CochlSense.service', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='events', full_name='sense.full.v1.CochlSense.events', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=187,
+  serialized_end=254,
+)
+
+_COCHLSENSE.fields_by_name['events'].message_type = _EVENT
+DESCRIPTOR.message_types_by_name['Audio'] = _AUDIO
+DESCRIPTOR.message_types_by_name['Event'] = _EVENT
+DESCRIPTOR.message_types_by_name['CochlSense'] = _COCHLSENSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
-  'DESCRIPTOR' : _REQUEST,
+Audio = _reflection.GeneratedProtocolMessageType('Audio', (_message.Message,), {
+  'DESCRIPTOR' : _AUDIO,
   '__module__' : 'SenseClient_pb2'
-  # @@protoc_insertion_point(class_scope:sense.full.v1.Request)
+  # @@protoc_insertion_point(class_scope:sense.full.v1.Audio)
   })
-_sym_db.RegisterMessage(Request)
+_sym_db.RegisterMessage(Audio)
 
-RequestStream = _reflection.GeneratedProtocolMessageType('RequestStream', (_message.Message,), {
-  'DESCRIPTOR' : _REQUESTSTREAM,
+Event = _reflection.GeneratedProtocolMessageType('Event', (_message.Message,), {
+  'DESCRIPTOR' : _EVENT,
   '__module__' : 'SenseClient_pb2'
-  # @@protoc_insertion_point(class_scope:sense.full.v1.RequestStream)
+  # @@protoc_insertion_point(class_scope:sense.full.v1.Event)
   })
-_sym_db.RegisterMessage(RequestStream)
+_sym_db.RegisterMessage(Event)
 
-Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), {
-  'DESCRIPTOR' : _RESPONSE,
+CochlSense = _reflection.GeneratedProtocolMessageType('CochlSense', (_message.Message,), {
+  'DESCRIPTOR' : _COCHLSENSE,
   '__module__' : 'SenseClient_pb2'
-  # @@protoc_insertion_point(class_scope:sense.full.v1.Response)
+  # @@protoc_insertion_point(class_scope:sense.full.v1.CochlSense)
   })
-_sym_db.RegisterMessage(Response)
+_sym_db.RegisterMessage(CochlSense)
 
 
 DESCRIPTOR._options = None
 
-_SENSE = _descriptor.ServiceDescriptor(
-  name='Sense',
-  full_name='sense.full.v1.Sense',
+_COCHL = _descriptor.ServiceDescriptor(
+  name='Cochl',
+  full_name='sense.full.v1.Cochl',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=279,
-  serialized_end=425,
+  create_key=_descriptor._internal_create_key,
+  serialized_start=257,
+  serialized_end=400,
   methods=[
   _descriptor.MethodDescriptor(
-    name='sense',
-    full_name='sense.full.v1.Sense.sense',
+    name='sensefile',
+    full_name='sense.full.v1.Cochl.sensefile',
     index=0,
     containing_service=None,
-    input_type=_REQUEST,
-    output_type=_RESPONSE,
+    input_type=_AUDIO,
+    output_type=_COCHLSENSE,
     serialized_options=None,
+    create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='sense_stream',
-    full_name='sense.full.v1.Sense.sense_stream',
+    name='sensestream',
+    full_name='sense.full.v1.Cochl.sensestream',
     index=1,
     containing_service=None,
-    input_type=_REQUESTSTREAM,
-    output_type=_RESPONSE,
+    input_type=_AUDIO,
+    output_type=_COCHLSENSE,
     serialized_options=None,
+    create_key=_descriptor._internal_create_key,
   ),
 ])
-_sym_db.RegisterServiceDescriptor(_SENSE)
+_sym_db.RegisterServiceDescriptor(_COCHL)
 
-DESCRIPTOR.services_by_name['Sense'] = _SENSE
+DESCRIPTOR.services_by_name['Cochl'] = _COCHL
 
 # @@protoc_insertion_point(module_scope)

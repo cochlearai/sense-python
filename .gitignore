@@ -2,3 +2,6 @@
 build
 dist
 cochl_sense.egg-info
+.eggs
+**.wav
+**.raw
